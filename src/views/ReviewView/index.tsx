@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as monacoApi from 'monaco-editor/esm/vs/editor/editor.api';
-import ReviewEditor from '../../components/editor';
+import ReviewEditor from 'components/editor';
 
 interface IProps {}
 

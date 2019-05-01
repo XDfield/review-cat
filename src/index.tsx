@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import 'index.css';
+import App from 'App';
+import * as serviceWorker from 'serviceWorker';
 
 // 加载 monaco 默认语言
 import 'monaco-editor/esm/vs/basic-languages/monaco.contribution';

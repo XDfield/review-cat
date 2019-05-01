@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AppContainer from './containers/AppContainer';
+import AppContainer from 'containers/AppContainer';
 
 interface IProps {}
 
