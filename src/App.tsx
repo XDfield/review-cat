@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import AppContainer from './containers/AppContainer';
+
+interface IProps {}
+
+interface IState {
+  token: string;
+  hasLogin: boolean;
 }
+export default class App extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
-export default App;
+    this.state = {
+      token: '',
+      hasLogin: false,
+    };
+  }
+
+  componentDidMount() {
+    const tempToken = process.env.REACT_APP_GITHUB_TOKEN;
+    if (tempToken) {
+      this.setState({
+        token: tempToken,
+        hasLogin: true,
+      });
+    }
+  }
+
+  loginCb = () => this.setState({ hasLogin: true });
+
+  render() {
+    if (this.state.hasLogin) {
+      return <AppContainer />;
+    } else {
+      return <div>Please login</div>;
+    }
+  }
+}
