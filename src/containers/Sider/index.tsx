@@ -54,7 +54,9 @@ export default class Sider extends React.Component<IProps, IState> {
       return null;
     }
 
-    return <SiderPanel>{selectPanel}</SiderPanel>;
+    return (
+      <SiderPanel onResize={this.props.onWidthChange}>{selectPanel}</SiderPanel>
+    );
   };
 
   get siderBarActions(): ISiderBarAction[] {
