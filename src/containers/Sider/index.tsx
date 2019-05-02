@@ -29,15 +29,10 @@ export default class Sider extends React.Component<IProps, IState> {
 
   genAction = (
     label: string,
-    type: React.ComponentType<IIconProps>
+    icon: React.ComponentType<IIconProps>
   ): ISiderBarAction => {
     return {
-      icon: {
-        type,
-        color: '#ddd',
-        hoverColor: '#000',
-        activeColor: '#000',
-      },
+      icon,
       label,
       showPanel: () => {
         this.setState({ selectPanel: label });

@@ -2,13 +2,14 @@ import * as React from 'react';
 import { Block, FlexBlock } from 'components/style';
 import { SIDERBAR_WIDTH } from 'components/siderBar';
 import Resizer from './resizer';
+import { withTheme, IThemeable } from 'components/theme';
 
 export const SIDERPANEL_DEFAULT_WIDTH = 250;
 export const MIN_SIDERPANEL_WIDTH = 170;
 // 侧边栏最大到排除 siderBar 后的 80% 宽度
 export const MAX_SIDERPANEL_RATE = 0.8;
 
-interface IProps {
+interface IProps extends IThemeable {
   onResize?: () => void;
 }
 
@@ -21,7 +22,7 @@ interface IState {
   };
 }
 
-export default class SiderPanel extends React.Component<IProps, IState> {
+class SiderPanel extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -93,9 +94,18 @@ export default class SiderPanel extends React.Component<IProps, IState> {
     this.setState({ isResizing: false });
   };
 
+  get containerStyle(): React.CSSProperties {
+    const { theme } = this.props;
+    return {
+      width: this.state.width,
+      position: 'relative',
+      backgroundColor: theme.getColor('sideBar.background'),
+    };
+  }
+
   render() {
     return (
-      <FlexBlock style={{ width: this.state.width, position: 'relative' }}>
+      <FlexBlock style={this.containerStyle}>
         <Block>{this.props.children}</Block>
         <Resizer
           onMouseDown={this.onResizeStart}
@@ -105,3 +115,5 @@ export default class SiderPanel extends React.Component<IProps, IState> {
     );
   }
 }
+
+export default withTheme(SiderPanel);

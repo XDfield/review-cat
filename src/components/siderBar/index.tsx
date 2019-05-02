@@ -2,28 +2,22 @@ import * as React from 'react';
 import { Block } from 'components/style';
 import { ActionList, ActionItem } from './style';
 import { IIconProps } from 'components/icon';
+import { withTheme, IThemeable } from 'components/theme';
 
 export const SIDERBAR_WIDTH: number = 50;
 
-export interface ISiderBarActionIcon {
-  type: React.ComponentType<IIconProps>;
-  color?: string;
-  hoverColor?: string;
-  activeColor?: string;
-}
-
 export interface ISiderBarAction {
-  icon: ISiderBarActionIcon;
+  icon: React.ComponentType<IIconProps>;
   label: string;
   showPanel: () => void;
   hidePanel: () => void;
 }
 
-interface IProps {
+interface IProps extends IThemeable {
   actions: ISiderBarAction[];
 }
 
-export default ({ actions }: IProps) => {
+const SiderBar = ({ actions, theme }: IProps) => {
   const defaultSelect = actions.length === 0 ? '' : actions[0].label;
   const [select, setSelect] = React.useState(defaultSelect);
 
@@ -42,16 +36,23 @@ export default ({ actions }: IProps) => {
   };
 
   return (
-    <Block width={`${SIDERBAR_WIDTH}px`}>
+    <Block
+      width={`${SIDERBAR_WIDTH}px`}
+      style={{ backgroundColor: theme.getColor('activityBar.background') }}
+    >
       <ActionList>
         {actions.map(action => {
           const color =
             select === action.label
-              ? action.icon.activeColor
-              : action.icon.color;
+              ? theme.getColor('activityBar.foreground')
+              : theme.getColor('activityBar.inactiveForeground');
           return (
             <ActionItem onClick={handleClick(action)} key={action.label}>
-              <action.icon.type color={color} size={20} />
+              <action.icon
+                color={color}
+                hoverColor={theme.getColor('activityBar.foreground')}
+                size={30}
+              />
             </ActionItem>
           );
         })}
@@ -59,3 +60,5 @@ export default ({ actions }: IProps) => {
     </Block>
   );
 };
+
+export default withTheme(SiderBar);

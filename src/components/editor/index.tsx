@@ -31,7 +31,7 @@ class ReviewEditor extends React.Component<IProps> {
     originalValue: '',
     modifiedValue: '',
     language: 'plaintext',
-    theme: 'vs-dark',
+    theme: 'one-dark-pro',
   };
 
   componentDidMount() {
